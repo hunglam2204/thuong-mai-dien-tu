@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TMDT_Web.Models.Domain.Company>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="side_bar_blog col-lg-3">
+            <h4>Chức Năng</h4>
+            <div class="categary">
+                <ul>
+                    <li><a href="@Url.Action("Index","AdminHome",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Trang Chủ</a></li>
+                    <li><a href="@Url.Action("Index","Finance",new { area= "Admin"})"><i class="fa fa-angle-right"></i> Báo Cáo Doanh Thu</a></li>
+                    <li><a href="@Url.Action("Index","Company",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Công Ty</li>
+                    <li><a href="@Url.Action("Index","Brand",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Phân Loại</a></li>
+                    <li><a href="@Url.Action("Index","Product",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Sản Phẩm</a></li>
+                    <li><a href="@Url.Action("Index","User",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Người Dùng</a></li>
+                    <li><a href="@Url.Action("Index","Order",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Đơn Hàng</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 float-left" style="margin-top:30px">
+            <p>
+                @Html.ActionLink("Thêm Công Ty", "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </th>*@
+                    <th>Tên Công ty</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CompanyID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CompanyID })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

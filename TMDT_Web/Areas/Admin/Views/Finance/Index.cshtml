@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="side_bar_blog col-lg-3">
+            <h4>Chức Năng</h4>
+            <div class="categary">
+                <ul>
+                    <li><a href="@Url.Action("Index","AdminHome",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Trang Chủ</a></li>
+                    <li><a href="@Url.Action("Index","Finance",new { area= "Admin"})"><i class="fa fa-angle-right"></i> Báo Cáo Doanh Thu</a></li>
+                    <li><a href="@Url.Action("Index","Company",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Công Ty</li>
+                    <li><a href="@Url.Action("Index","Brand",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Phân Loại</a></li>
+                    <li><a href="@Url.Action("Index","Product",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Sản Phẩm</a></li>
+                    <li><a href="@Url.Action("Index","User",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Người Dùng</a></li>
+                    <li><a href="@Url.Action("Index","Order",new { area= "Admin"})"><i class="fa fa-angle-right"></i>Đơn Hàng</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 float-left" style="margin-top:30px">
+            <form action="@Url.Action("GetMonth","Finance")">
+                <label>Tháng</label>
+                <select name="Month">
+                    @foreach (var month in ViewBag.months)
+                    {
+                        <option value="@(ViewBag.count++)">@month</option>
+                    }
+                </select>
+                <input type="submit" value="Search" />
+            </form>
+            @if (@ViewBag.month == null)
+            {
+                <h1>@ViewBag.alert</h1>
+            }
+            else
+            {
+                <div class="col-lg-9 float-left">
+                    <table class="table table-border">
+                        <tr>
+                            <th colspan="2"><h5 class="center">2020</h5><h6 class="center">@ViewBag.oneMonth</h6></th>
+                        </tr>
+                        <tr>
+                            <td>Ngày</td>
+                            <td>Doanh Thu</td>
+                        </tr>
+                        @foreach (var item in ViewBag.test1)
+                        {
+                            <tr>
+                                <td>@(ViewBag.countDays++)</td>
+                                <td>@item</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>Doanh Thu Tháng</td>
+                            <td>@ViewBag.monthOutcome</td>
+                        </tr>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

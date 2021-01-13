@@ -1,0 +1,82 @@
+﻿@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="title-holder">
+                        <div class="title-holder-cell text-left">
+                            <h1 class="page-title">Shop Page</h1>
+                            <ol class="breadcrumb">
+                                <li><a href="@Url.Action("Index","Home", new { area=""})">Home</a></li>
+                                <li class="active">Search</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end inner page banner -->
+<!-- Danh sách sản phẩm & side bar -->
+<div class="section padding_layout_1 product_list_main">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-9">
+                <div class="row">
+                    @foreach (var item in ViewData["Search"] as PagedList.IPagedList<TMDT_Web.Models.Domain.Product>)
+                    {
+                        <div class="col-md-4 col-sm-6 col-xs-12 margin_bottom_30_all">
+                            <div class="product_list">
+                                <div class="product_img"> <img class="img-responsive card-img" src="~/Images/Products/@item.Image" alt=""> </div>
+                                <div class="product_detail_btm">
+                                    <div class="center">
+                                        <h4><a href="it_shop_detail.html">@item.ProductName</a></h4>
+                                    </div>
+                                    <div class="product_price">
+                                        <p><span class="old_price">$15.000</span> – <span class="new_price">@item.Price VND</span></p>
+                                    </div>
+                                    <div class="button_Section_cont center"> <a class="btn dark_gray_bt" href="#">Liên Hệ với chúng tôi</a> </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    <div class="center col-md-12 col-sm-6 col-xs-12 margin_bottom_30_all">
+                        @foreach (var item in ViewData["Search"] as PagedList.IPagedList<TMDT_Web.Models.Domain.Product>)
+                        {
+                            @Html.PagedListPager(ViewData["Search"] as PagedList.IPagedList<TMDT_Web.Models.Domain.Product>, page => Url.Action("Search", "Home", new { search = item.ProductName, page }))
+                            break;
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Side bar -->
+            <div class="col-md-3">
+                <div class="side_bar">
+                    <div class="side_bar_blog">
+                        <h4>Phân Loại</h4>
+                        <div class="categary">
+                            <ul>
+                                @foreach (var item in ViewBag.SideBar)
+                                {
+                                    <li><a href="@Url.Action("CompanySidebar","Home", new { companysidebar=item.CompanyID})"><i class="fa fa-angle-right"></i>@item.CompanyName</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- Kết side bar -->
+        </div>
+    </div>
+</div>
+<!-- Kết ds sản phẩm -->

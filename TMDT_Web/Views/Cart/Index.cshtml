@@ -1,0 +1,210 @@
+﻿@model TMDT_Web.Models.Domain.Account
+@using TMDT_Web.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="section padding_layout_1 Shopping_cart_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-md-12">
+                    <div class="product-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sản Phẩm</th>
+                                 
+                                    <th>Số Lượng</th>
+                                    <th class="text-center">Giá</th>
+                                    <th class="text-center">Thành Tiền</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Item item in (List<Item>)Session["cart"])
+                                {
+                                    <tr>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media">
+                                                <a class="thumbnail pull-left" href="#"> <img class="media-object cart-img" src="~/Images/Products/@item.product.Image" alt="#"></a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#">@item.product.ProductName</a></h4>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                                            <form action="@Url.Action("UpdateQuantity","Cart",new { id=item.product.ProductID})">
+                                                <input class="form-control" value="@item.QuantityBuy" type="number" name="quantity">
+                                                <input type="submit" value="Cập nhật" />
+                                            </form>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center"><p class="price_table">@item.product.Price</p></td>
+                                        <td class="col-sm-1 col-md-1 text-center"><p class="price_table">@(item.product.Price * item.QuantityBuy)</p></td>
+                                        <td class="col-sm-1 col-md-1">
+                                            <form action="@Url.Action("Remove","Cart", new { id=item.product.ProductID})">
+                                                <button type="submit" class="bt_main">
+                                                    <i class="fa fa-trash"></i> Remove
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <h2>Thông tin thanh toán</h2>
+                            <table class="table" style="text-align:center">
+                                <tbody>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Tài Khoản" name="Address" value="@Model.UserName" />
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Địa Chỉ Giao" name="Address" value="@Model.Address" />
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Email" name="Email" value="@Model.Email" />
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Số Điện Thoại" name="PhoneNumber" value="@Model.PhoneNumber" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <h2>Thông tin Thanh Toán</h2>
+                            <table class="table" style="text-align:center">
+                                <tbody>
+
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Địa chỉ giao hàng" name="Address" value="" />
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Email" name="Email" value="" />
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-form">
+                                        <td class="actions">
+                                            <input type="text" placeholder="Số Điện Thoại" name="PhoneNumber" value="" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <div class="shopping-cart-cart">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><h3 style="color:red">Thành tiền</h3></td>
+                                    <td class="text-right"><h4>@ViewBag.total VNĐ</h4></td>
+                                </tr>
+                                <tr class="head-table">
+                                    <td><h5>Phương thức thanh toán</h5></td>
+                                    <td class="text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td> <label>Tiền mặt</label></td>
+                                    <td><input type="radio" value="Cash" name="payment" id="Cash" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Thanh toán Momo</label></td>
+                                    <td><input type="radio" value="Momo" name="payment" id="Momo" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Thanh toán Paypal</label></td>
+                                    <td><input type="radio" value="Paypal" name="payment" id="Paypal" /></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="@Url.Action("Menu","Home")">Tiếp tục mua sắm</a></td>
+                                    <td>
+                                        <button class="bt_main" onclick="paymentMethod()">Xác Nhận</button>
+                                    </td>
+                                    <td>
+                                        <form id="momoForm" action="@Url.Action("CheckOut","Cart")">
+                                            <input type="hidden" value="2" name="typePay" />
+                                            <input type="hidden" id="address" name="address" />
+                                            <input type="hidden" id="email" name="email" />
+                                            <input type="hidden" id="phoneNumber" name="phoneNumber" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form id="cashForm" action="@Url.Action("CheckOut","Cart")">
+                                            <input type="hidden" value="1" name="typePay" />
+                                            <input type="hidden" id="address1" name="address" />
+                                            <input type="hidden" id="email1" name="email" />
+                                            <input type="hidden" id="phoneNumber1" name="phoneNumber" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form id="paypalForm" action="@Url.Action("PaymentWithPaypal","Cart")">
+                                            <input type="hidden" id="address2" name="address" />
+                                            <input type="hidden" id="email2" name="email" />
+                                            <input type="hidden" id="phoneNumber2" name="phoneNumber" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+<script>
+    function paymentMethod() {
+        var cash = document.getElementById("Cash").checked;
+        var momo = document.getElementById("Momo").checked;
+        var paypal = document.getElementById("Paypal").checked;
+
+        document.getElementById("address").value = document.getElementsByName("Address")[0].value;
+        document.getElementById("email").value = document.getElementsByName("Email")[0].value;
+        document.getElementById("phoneNumber").value = document.getElementsByName("PhoneNumber")[0].value;
+
+        document.getElementById("address1").value = document.getElementsByName("Address")[0].value;
+        document.getElementById("email1").value = document.getElementsByName("Email")[0].value;
+        document.getElementById("phoneNumber1").value = document.getElementsByName("PhoneNumber")[0].value;
+
+        document.getElementById("address2").value = document.getElementsByName("Address")[0].value;
+        document.getElementById("email2").value = document.getElementsByName("Email")[0].value;
+        document.getElementById("phoneNumber2").value = document.getElementsByName("PhoneNumber")[0].value;
+
+        if (momo == true) {
+
+            document.getElementById("momoForm").submit();
+        }
+        else if (cash == true) {
+
+            document.getElementById("cashForm").submit();
+        }
+        else if (paypal == true) {
+
+            document.getElementById("paypalForm").submit();
+        }
+    }
+</script>
+
+
+
+

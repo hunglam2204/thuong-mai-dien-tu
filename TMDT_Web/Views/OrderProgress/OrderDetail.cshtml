@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="section padding_layout_1 Shopping_cart_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="product-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản Phẩm</th>
+                                <th>Mã đơn hàng</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Thành tiền</th>
+                                <th> Tổng Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.orderDetail)
+                            {
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object cart-img" src="~/Images/Products/@item.Product.Image" alt="#"></a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">@item.Product.ProductName</a></h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-2 col-md-2 text-center"><p class="price_table">@item.OrderID</p></td>
+                                    <td class="col-sm-2 col-md-2 text-center"><p class="price_table">@item.OrderID</p></td>
+                                    <td class="col-sm-2 col-md-2 text-center"><p class="price_table">@item.QuantityBuy</p></td>
+                                    <td class="col-sm-2 col-md-2 text-center"><p class="price_table">@item.Product.Price</p></td>
+                                    <td class="col-sm-2 col-md-2 text-center">
+                                        <p class="price_table">@item.Price </p>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="shopping-cart-cart" style="background-color:cornflowerblue">
+                    <table>
+                        <tbody>
+                            <tr class="head-table">
+                                <td><h5>Tổng đơn hàng</h5></td>
+                                <td class="text-right"></td>
+                            </tr>
+                            <tr>
+                                <td><h3>Thành tiền</h3></td>
+                                <td class="text-right"><h4>@ViewBag.total</h4></td>
+                            </tr>
+                            <tr>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <td><a href="@Url.Action("HistoryOrder","OrderProgress")">Quay về... </a></td>
+                                }
+                                else
+                                {
+                                    foreach (var item in ViewBag.orderDetail)
+                                    {
+                                        <td><a href="@Url.Action("HistoryOrder","OrderProgress", new { num= item.Order.OrderPhoneNumber})">Quay về...</a></td>
+                                    }
+                                }
+                                <td>
+                                    @foreach (var item in ViewBag.orderDetail)
+                                    {
+                                        if (item.Order.Status == null)
+                                        {
+                                            <div class="shopping-cart-cart">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <h4 id="demo"></h4>
+                                                                @*<input type="hidden" id="DateTimeNow" value=" @item.Order.DateTimeOrder" />
+                                                                <input type="hidden" id="DateTimeCount" value="@ViewBag.time" />*@
+                                                                <form id="cancelOrder" action="@Url.Action("Cancel","OrderProgress", new { id=item.OrderID})">
+                                                                    <button class="button" onclick="">Hủy Đặt Hàng</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+                                        break;
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <hr />
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3> TRẠNG THÁI ĐƠN HÀNG</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="full text_align_center margin_bottom_30">
+                    <div class="center">
+                        <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si4.png" alt="#" /> </div>
+                    </div>
+                    <h4 class="theme_color">Đang Xác Nhận</h4>
+                </div>
+            </div>
+            @if (ViewBag.status == null)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si6.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã Xác Nhận</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si1.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đang Vận Chuyển</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30 margin_0">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si5.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã Hoàn Thành</h4>
+                    </div>
+                </div>
+            }
+            else if (ViewBag.status == 1)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si6.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã xác nhận</h4>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si1.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đang giao</h4>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30 margin_0">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si5.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã giao</h4>
+                        
+                    </div>
+                </div>
+            }
+            else if (ViewBag.status == 3)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si6.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Xác nhận</h4>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si1.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đang giao</h4>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30 margin_0">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si5.png" alt="#" style="filter: grayscale(100%)" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã giao</h4>
+                        
+                    </div>
+                </div>
+            }
+            else if (ViewBag.status == 4)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si6.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Xác nhận</h4>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si1.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đang giao</h4>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30 margin_0">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si5.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Đã giao</h4>
+                        
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="full text_align_center margin_bottom_30">
+                        <div class="center">
+                            <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si2.png" alt="#" /> </div>
+                        </div>
+                        <h4 class="theme_color">Hủy Đơn Hàng</h4>
+                       
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    var countDownDate = new Date(document.getElementById("DateTimeCount").value).getTime();
+    var x = setInterval(function () {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / (1000));
+
+        document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + " ";
+
+        if (distance <= 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "Time cancel order is out";
+            document.getElementById("cancelOrder").style.display = "none";
+        }
+        else {
+            document.getElementById("cancelOrder").style.display = "block";
+        }
+    }, 1000);
+</script>

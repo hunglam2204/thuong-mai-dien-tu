@@ -1,0 +1,126 @@
+﻿@model IEnumerable<TMDT_Web.Models.Domain.Order>
+@{
+    ViewBag.Title = "HistoryOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<
+
+<!-- Danh sách sản phẩm & side bar -->
+<div class="section" style="margin-top:20px">
+    <div class="container">
+        <div class="row">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-sm-12">
+                    <table class="table">
+                        <tr>
+                            <th>Mã đặt hàng</th>
+                            <th>Thời gian</th>
+                            <th>Tên KH</th>
+                            <th>Trạng thái</th>
+                            <th>Phương thức thanh toán</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in ViewBag.order)
+                        {
+                            <tr>
+                                <td>@item.OrderID</td>
+                                <td>
+                                    @item.DateTimeOrder
+                                </td>
+                                <td>@item.Account.UserName</td>
+                                @if (item.Status == null)
+                                {
+                                    <td>Đang đợi xác nhận</td>
+                                }
+                                else if (item.Status == 1)
+                                {
+                                    <td>Đã xác nhận</td>
+
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td>Đã hủy</td>
+                                }
+                                else if (item.Status == 3)
+                                {
+                                    <td>Đang giao</td>
+                                }
+                                else if (item.Status == 4)
+                                {
+                                    <td>Đã giao</td>
+                                }
+
+                                @if (item.TypePayment == 1)
+                                {
+                                    <td>Thanh toán tiền mặt</td>
+                                }
+                                else if (item.TypePayment == 2)
+                                {
+                                    <td>Thanh toán MoMo</td>
+                                }
+                                else
+                                {
+                                    <td>Thanh toán bằng Paypal</td>
+                                }
+                                <td><a href="@Url.Action("OrderDetail","OrderProgress",new { id=item.OrderID})">Xem chi tiết đơn hàng...</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="col-sm-12">
+                    <form action="@Url.Action("HistoryOrder","OrderProgress")">
+                        <input type="text" name="num" />
+                        <input type="submit" />
+                    </form>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table">
+                        <tr>
+                            <th>Mã Đơn Hàng</th>
+                            <th>Ngày Đặt Hàng</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in ViewBag.order)
+                        {
+                            <tr>
+                                <td>@item.OrderID</td>
+                                <td>@item.DateTimeOrder</td>
+                                <td>@item.OrderPhoneNumber</td>
+                                @if (item.Status == null)
+                                {
+                                    <td>Đang đợi xác nhận</td>
+                                }
+                                else if (item.Status == 1)
+                                {
+                                    <td>Đã xác nhận</td>
+
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td>Đã hủy</td>
+                                }
+                                else if (item.Status == 3)
+                                {
+                                    <td>Đang giao</td>
+                                }
+                                else if (item.Status == 4)
+                                {
+                                    <td>Đã giao</td>
+                                }
+                                <td><a href="@Url.Action("OrderDetail","OrderProgress",new { id=item.OrderID})">Xem chi tiết</a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Kết ds sản phẩm -->

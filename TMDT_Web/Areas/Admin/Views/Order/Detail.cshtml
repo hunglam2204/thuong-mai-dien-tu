@@ -1,0 +1,44 @@
+﻿@model IEnumerable<TMDT_Web.Models.Domain.OrderDetail>
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="section padding_layout_1 Shopping_cart_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="product-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản Phẩm</th>
+                                <th>ID Đơn Hàng</th>
+                                <th>Số Lượng</th>
+                                <th>Giá</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object cart-img" src="~/Images/Products/@item.Product.Image" alt="#"></a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">@item.Product.ProductName</a></h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><p class="price_table">@item.OrderID</p></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><p class="price_table">@item.QuantityBuy</p></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><p class="price_table">@(item.Price * item.QuantityBuy)</p></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

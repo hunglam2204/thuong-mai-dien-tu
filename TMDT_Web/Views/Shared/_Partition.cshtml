@@ -1,0 +1,12 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="float-right">
+        <div class="make_appo"><a class="btn white_btn" href="@Url.Action("Index","Authentication", new { area=""})">@User.Identity.Name</a> </div>
+    </div>
+}
+else
+{
+    <div class="float-right">
+        <div class="make_appo"> <a class="btn white_btn" href="@Url.Action("Login","Authentication", new { area=""})">Login</a> </div>
+    </div>
+}

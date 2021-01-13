@@ -1,0 +1,178 @@
+﻿@model TMDT_Web.Models.Domain.Account
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <table class="table" style="margin-top:50px">
+                <tr>
+                    <th>Avatar:</th>
+                    <td colspan="2">
+                        <form action="@Url.Action("ChangeAvatar","Authentication")" method="post" enctype="multipart/form-data">
+                            <img src="~/Images/Avatar/@Model.Avatar" style="height:400px; width:400px" />
+                            <br />
+                            <input type="file" name="Image" />
+                            <br />
+                            <button type="submit">Save</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Họ Và Tên</th>
+                    <td>
+                        <p style="font-weight:bold"> @Model.FirstName @Model.LastName</p>
+                        <form action="@Url.Action("ChangeFullName","Authentication", new { id=Model.UserID})">
+                            <ul id="fullname" style="display:none">
+                                <li>Họ </li>
+                                <li><input type="text" name="FirstName" placeholder="" value="@Model.FirstName" /></li>
+                                <li>Tên</li>
+                                <li><input type="text" name="LastName" placeholder="" value="@Model.LastName" /></li>
+                                <li><input type="submit" value="Change" /></li>
+                            </ul>
+                        </form>
+                    </td>
+                    <td><button onclick="ShowHideFullName()">Sửa</button></td>
+                </tr>
+                <tr>
+                    <th>Tài Khoản</th>
+                    <td>
+                        <p style="font-weight:bold">@Model.UserName</p>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Địa Chỉ</th>
+                    <td>
+                        <p style="font-weight:bold">@Model.Address</p>
+                        <form action="@Url.Action("ChangeAddress","Authentication", new { id=Model.UserID})">
+                            <ul id="address" style="display:none">
+                                <li>Địa Chỉ</li>
+                                <li><input type="text" name="Address" placeholder="" value="@Model.Address" /></li>
+                                <li><input type="submit" value="Change" /></li>
+                            </ul>
+                        </form>
+                    </td>
+                    <td><button onclick="ShowHideAddress()">Sửa</button></td>
+                </tr>
+                <tr>
+                    <th>Age:</th>
+                    <td>
+                        <p style="font-weight:bold">@Model.Age</p>
+                        <form action="@Url.Action("ChangeAge","Authentication", new { id=Model.UserID})">
+                            <ul id="age" style="display:none">
+                                <li>Tuổi</li>
+                                <li><input type="text" name="Age" placeholder="" value="@Model.Age" /></li>
+                                <li><input type="submit" value="Change" /></li>
+                            </ul>
+                        </form>
+                    </td>
+                    <td><button onclick="ShowHideAge()">Sửa</button></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>
+                        <p style="font-weight:bold">@Model.Email</p>
+                        <form action="@Url.Action("ChangeEmail","Authentication", new { id=Model.UserID})">
+                            <ul id="mail" style="display:none">
+                                <li>Email</li>
+                                <li><input type="text" name="Mail" placeholder="" value="@Model.Email" /></li>
+                                <li><input type="submit" value="Change" /></li>
+                                <li style="color:red">@ViewBag.errorEmail</li>
+                            </ul>
+                        </form>
+                    </td>
+                    <td><button onclick="ShowHideMail()">Sửa</button></td>
+                </tr>
+                <tr>
+                    <th>Mật Khẩu:</th>
+                    <td>
+                        <form action="@Url.Action("ChangePassword","Authentication", new { id=Model.UserID})">
+                            <ul id="PW" style="display:none">
+                                <li>Mật Khẩu cũ</li>
+                                <li><input type="password" value="" name="cpw" /></li>
+                                <li>Mật Khẩu mới</li>
+                                <li><input type="password" name="npw" /></li>
+                                <li>Xác nhận mật khẩu</li>
+                                <li><input type="password" name="cnpw" /></li>
+                                <li><button type="submit">Đổi Mật Khẩu</button></li>
+                                <li style="color:red">@ViewBag.error</li>
+                            </ul>
+                        </form>
+                    </td>
+                    <td><button onclick="ShowHidePassWord()">Edit</button></td>
+                </tr>
+            </table>
+            <div class="side_bar_blog col-lg-3">
+                <div class="categary">
+                    <li>
+                        <form action="@Url.Action("Logout","Authentication")" id="logout">
+                            <a href="#" onclick="LogOut()"></i> Đăng xuất</a>
+                        </form>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Script -->
+<script>
+    function ShowHidePassWord() {
+        var x = document.getElementById("PW");
+        if (x.style.display == "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    }
+    function ShowHideFullName() {
+        var x = document.getElementById("fullname");
+        if (x.style.display == "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    }
+    function ShowHideAddress() {
+        var x = document.getElementById("address");
+        if (x.style.display == "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    }
+    function ShowHideAge() {
+        var x = document.getElementById("age");
+        if (x.style.display == "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    }
+    function ShowHideMail() {
+        var x = document.getElementById("mail");
+        if (x.style.display == "none") {
+            x.style.display = "block";
+        }
+        else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<!-- End script -->
+<!-- Script -->
+<script>
+    function LogOut() {
+        document.getElementById("logout").submit();
+    }
+</script>
+<!-- End script -->

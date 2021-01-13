@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Carousel -->
+<div id="slider" class="section main_slider">
+    <div class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="~/Images/Avatar/banner1.jpg" alt="#" style="width:100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Carousel -->
+<!-- section -->
+<div class="section padding_layout_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="full text_align_center margin_bottom_30">
+                    <div class="center">
+                        <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/i1.png" alt="#" /> </div>
+                    </div>
+                    <br />
+                    <h3 style="text-align:center; color:orange">CAM KẾT CHÍNH HÃNG</h3>
+                    <h5 style="text-align:center;"><b>100 % Authentic</b></h5>
+                    <h5 style="text-align:center;"><p>Cam kết chính hãng từ Châu Âu, Châu Mỹ...</p></h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="full text_align_center margin_bottom_30">
+                    <div class="center">
+                        <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/i2.png" alt="#" /> </div>
+                    </div>
+                    <br />
+                    <h3 style="text-align:center; color:orange">GIAO HÀNG HỎA TỐC</h3>
+                    <h5 style="text-align:center;"><b>Express delivery</b></h5>
+                    <h5 style="text-align:center;"><p>SHIP hỏa tốc 1h nhận hàng trong nội thành HCM</p></h5>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="full text_align_center margin_bottom_30">
+                    <div class="center" style="height:73.06px">
+                        <div class="icon"> <img src="~/Templates/IT-Next/images/it_service/si2.png" alt="#" style="height: 73.06px; filter:grayscale(70%)" /> </div>
+                    </div>
+                    <br />
+                    <h3 style="text-align:center; color:orange">HỖ TRỢ 24/24</h3>
+                    <h5 style="text-align:center;"><b>Supporting 24/24</b></h5>
+                    <h5 style="text-align:center;"><p>Gọi ngay 19005869</p></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="main_heading text_align_center">
+                        <h2>SẢN PHẨM MỚI</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewData["viewLatest"] as IEnumerable<TMDT_Web.Models.Domain.Product>)
+            {
+                <div class="col-md-3 col-sm-6 col-xs-12 margin_bottom_30_all">
+                    <div class="product_list">
+                        <div class="product_img"><a href="@Url.Action("Detail","Home",new { id=item.ProductID})"><img class="img-responsive card-img" src="~/Images/Products/@item.Image" alt=""> </a></div>
+                        <div class="product_detail_btm">
+                            <div class="center">
+                                <h4><a href="it_shop_detail.html">@item.ProductName</a></h4>
+                            </div>
+                            <div class="product_price">
+                                <p>@*<span class="old_price">$15.00</span> –*@ <span class="new_price">@item.Price VND</span></p>
+                            </div>
+                            <div class="button_Section_cont center"> <a class="btn dark_gray_bt" style="background-color:red" href="@Url.Action("Buy","Cart",new { id=item.ProductID})">Thêm Vào Giỏ</a> </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="center"><a class="btn-link" href="@Url.Action("Menu","Home", new {type=3})">Xem Thêm</a></div>
+        <hr />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="main_heading text_align_center">
+                        <h2>SẢN PHẨM PHỔ BIẾN:</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewData["viewCount"] as IEnumerable<TMDT_Web.Models.Domain.Product>)
+            {
+                <div class="col-md-3 col-sm-6 col-xs-12 margin_bottom_30_all">
+                    <div class="product_list">
+                        <div class="product_img"><a href="@Url.Action("Detail","Home",new { id=item.ProductID})"><img class="img-responsive card-img" src="~/Images/Products/@item.Image" alt=""> </a></div>
+                        <div class="product_detail_btm">
+                            <div class="center">
+                                <h4><a href="it_shop_detail.html">@item.ProductName</a></h4>
+                            </div>
+                            <div class="product_price">
+                                <p>@*<span class="old_price">$15.00</span> –*@ <span class="new_price">@item.Price VND</span></p>
+                            </div>
+                            <div class="button_Section_cont center"> <a class="btn dark_gray_bt" style="background-color:red" href="@Url.Action("Buy","Cart",new { id=item.ProductID})">Thêm Vào Giỏ</a> </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="center"><a class="btn-link" href="@Url.Action("Menu","Home", new {type=2})">Xem Thêm</a></div>
+    </div>
+    <br />
+</div>
+<!-- end section -->
+
+
+
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
+
+
+@section scripts {
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.chatHub;
+            // Create a function that the hub can call back to display messages.
+            chat.client.addNewMessageToPage = function (name, message) {
+                // Add the message to the page.
+                $('#discussion').append('<li><strong>' + htmlEncode(name) + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+            // Get the user name and store it to prepend to messages.
+            $('#displayname').val();
+            // Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    // Call the Send method on the hub.
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}
+<!--End Chat box-->

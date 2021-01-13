@@ -1,0 +1,231 @@
+﻿@model TMDT_Web.Models.Domain.Product
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    button {
+        background-color: #58257b; /* Màu của Quản trị mạng ^^ */
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .button1 {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .button2:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+    .button1 {
+        background-color: white;
+        color: black;
+        border: 2px solid crimson;
+    }
+
+        .button1:hover {
+            background-color: crimson;
+            color: white;
+        }
+
+    .button2 {
+        background-color: red;
+        color: white;
+        border: 2px solid black;
+    }
+
+        .button2:hover {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+</style>
+
+
+<!-- section -->
+<div class="section padding_layout_1 product_detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-md-12">
+                        <div class="product_detail_feature_img hizoom hi2">
+                            <div class='hizoom hi2'> <img class="detail-img" src="~/Images/Products/@Model.Image" alt="#" /> </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12 product_detail_side detail_style1">
+                        <div class="product-heading">
+                            <h3>@Model.ProductName</h3>
+                            <h3 style="color:red">Giá: @Model.Price VNĐ</h3>
+                        </div>
+                        <div class="product-heading">
+                            <h4>Brands: @Model.Brand.BrandName</h4>
+                            <h4>Size: @Model.size</h4>
+                            <h4>Màu: @Model.Color</h4>
+                        </div>
+                        <div class="detail-contant">
+                            <p>
+                                @Model.Description<br>
+                                <span class="stock">Còn lại @Model.Quantity sản phẩm</span>
+                            </p>
+                            <form class="cart" method="post" action="@Url.Action("Buy","Cart", new { id=Model.ProductID})">
+                                <button type="submit" class="button button2">Thêm vào giỏ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <b>TẠI SAO NÊN CHỌN CHÚNG TÔI:</b>
+                        <p>
+                            • Hoàn Lại Tiền Gấp 10 Lần Nếu Phát Hiện Hàng Giả - Hàng Nhái.
+                        </p>
+                        <p>• Tăng Thêm Thời Gian Bảo Hành Lên Đến 5 Năm.</p>
+                        <p>
+                            • Sai Kích Cỡ? Không Ưng Ý? Đổi Hàng Trong 7 Ngày.
+                        </p>
+                        <p>
+                            • Thay Pin Miễn Phí Suốt Đời - Không Còn Lo Hết Pin Nữa.
+                        </p>
+                        <p>• Nhận Hàng & Trả Tiền - Ngay Tại Nhà Bạn. Hoàn Toàn Miễn Phí.</p>
+                        <p>
+                            • Đến & Cảm Nhận Kinh Nghiệm Hơn 25 Năm Của Chúng Tôi.
+                        </p>
+                        <b>Gọi đặt mua: 1900.5869 (7:30-21:30)</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="full">
+                            <div class="tab_bar_section">
+                             
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div id="reviews" class="tab-pane active">
+                                        <div class="product_review">
+                                            <h3>Phản hồi - Nhận xét (@ViewBag.countReview)</h3>
+                                            @foreach (var item in ViewBag.review)
+                                            {
+                                                <div class="commant-text row">
+                                                    <div class="col-lg-2 col-md-2 col-sm-4">
+                                                        <div class="profile"> <img class="img-responsive" src="~/Images/Avatar/@item.Account.Avatar" alt="#"> </div>
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-sm-8">
+                                                        <h5>@item.Account.UserName</h5>
+                                                        <p><span class="c_date">@item.DateTime</span> | <span><a rel="nofollow" class="comment-reply-link" href="#">Trả lời</a></span></p>
+                                                        <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span>
+                                                        <p class="msg">@item.Comment</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div>
+                                                        <label style="font-weight:bold; color:red">@ViewBag.error</label>
+                                                    </div>
+                                                    <div class="full review_bt_section">
+                                                        <div class="float-right"> <a class="btn sqaure_bt" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Gửi phản hồi</a> </div>
+                                                    </div>
+                                                    <div class="full">
+                                                        <div id="collapseExample" class="full collapse commant_box">
+                                                            <form id="review" accept-charset="UTF-8" action="@Url.Action("Review","Home", new { proid=Model.ProductID})" method="post">
+                                                                <input id="ratings-hidden" name="rating" type="hidden">
+                                                                <textarea class="form-control animated" cols="50" id="new-review" name="Comment" placeholder="Nhập nội dung nhận xét..." required=""></textarea>
+
+                                                            </form>
+                                                            <div class="full_bt center">
+                                                                <button class="btn sqaure_bt" onclick="reviewBtn()">Gửi phản hồi</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Sản phẩm liên quan-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="full">
+                            <div class="main_heading text_align_left" style="margin-bottom: 35px;">
+                                <h3>Sản phẩm được xem nhiều</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in ViewData["products"] as IEnumerable<TMDT_Web.Models.Domain.Product>)
+                    {
+                        <div class="col-md-3 col-sm-6 col-xs-12 margin_bottom_30_all">
+                            <div class="product_list">
+                                <div class="product_img"><a href="@Url.Action("Detail","Home",new { id=item.ProductID})"><img class="img-responsive card-img" src="~/Images/Products/@item.Image" alt=""> </a></div>
+                                <div class="product_detail_btm">
+                                    <div class="center">
+                                        <h4><a href="it_shop_detail.html">@item.ProductName</a></h4>
+                                    </div>
+                                    <div class="product_price">
+                                        <p>@*<span class="old_price">$15.00</span> –*@ <span class="new_price">@item.Price VND</span></p>
+                                    </div>
+                                    <div class="button_Section_cont center"> <a class="btn dark_gray_bt" href="#">Thêm vào giỏ</a> </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    <div class="center col-md-12 col-sm-6 col-xs-12 margin_bottom_30_all">
+                        @foreach (var item in ViewData["products"] as PagedList.IPagedList<TMDT_Web.Models.Domain.Product>)
+                        {
+                            @Html.PagedListPager(ViewData["products"] as PagedList.IPagedList<TMDT_Web.Models.Domain.Product>, page => Url.Action("Detail", "Home", new { id = Model.ProductID, page }))
+                            break;
+                        }
+                    </div>
+                </div>
+                <!--Kết Sản phẩm liên quan-->
+                <!-- Side bar -->
+                <!-- Kết side bar -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end section -->
+
+
+<script>
+    function reviewBtn() {
+        @*if (@User.Identity.IsAuthenticated) {
+            document.getElementById("review").submit();
+        }
+        else {
+            document.getElementById("error").innerHTML = "You have to login to comment this post!";
+        }*@
+        document.getElementById("review").submit();
+    }
+</script>

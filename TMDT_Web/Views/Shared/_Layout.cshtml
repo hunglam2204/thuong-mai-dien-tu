@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>CRUSHWATCH</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- site icons -->
+    <link rel="icon" href="~/Images/.png" type="image/gif" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/bootstrap.min.css" />
+    <!-- Site css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/style.css" />
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/responsive.css" />
+    <!-- colors css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/colors1.css" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/custom.css" />
+    <!-- wow Animation css -->
+    <link rel="stylesheet" href="~/Templates/IT-Next/css/animate.css" />
+    <!-- revolution slider css -->
+    <link rel="stylesheet" type="text/css" href="~/Templates/IT-Next/revolution/css/settings.css" />
+    <link rel="stylesheet" type="text/css" href="~/Templates/IT-Next/revolution/css/layers.css" />
+    <link rel="stylesheet" type="text/css" href="~/Templates/IT-Next/revolution/css/navigation.css" />
+    <link href="~/Content/footer.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+          <![endif]-->
+</head>
+<body id="default_theme" class="it_service" onload="DateTime()">
+
+    <!-- loader -->
+    @*<div class="bg_load"> <img class="loader_animation" src="~/Templates/IT-Next/images/loaders/loader_1.png" alt="#" /> </div>*@
+    <!-- end loader -->
+    <!-- header -->
+    <header id="default_header" class="header_style_1">
+        <!-- header top -->
+        <div class="header_top" style="background-color:slategrey">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="full">
+                            <div class="topbar-left">
+                                <ul class="list-inline">
+                                    <li>
+                                        <span class="topbar-label"><i class="fa  fa-home"></i></span> <span class="topbar-hightlight">
+                                            828 Sư Vạn Hạnh
+                                            Phường 13, Quận 10, Tp.HCM
+                                        </span>
+                                    </li>
+                                    <li> <span class="topbar-label"><i class="fa fa-envelope-o"></i></span> <span class="topbar-hightlight"><a href="mailto:info@yourdomain.com">CRUSHWATCH@gmail.com</a> || <a>Hotline: 19005869 </a></span> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 right_section_header_top">
+                        <div class="float-left">
+                            <div class="social_icon">
+                                <ul class="list-inline">
+                                    <li><a class="fa fa-facebook" href="https://www.facebook.com/MaiTu2104/" title="Facebook" target="_blank"></a></li>
+                                    <li><a class="fa fa-google-plus" href="nguyetmingduongthi@gmail.com" title="Google+" target="_blank"></a></li>
+                                    <li><a class="fa fa-twitter" href="#" title="Twitter" target="_blank"></a></li>
+                                    <li><a class="fa fa-instagram" href="https://www.instagram.com/hlam_224" title="Instagram" target="_blank"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        @Html.Partial("~/Views/Shared/_Partition.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end header top -->
+        <!-- header bottom -->
+        <div class="header_bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <!-- logo start -->
+                        <div class="logo"> <a href="@Url.Action("Index","Home", new { area=""})"> <img src="~/Images/Avatar/logo.png" alt="logo" />
+</a> </div>
+                        <!-- logo end -->
+                    </div>
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <!-- menu start -->
+                        <div class="menu_side">
+                            <div id="navbar_menu">
+                                <ul class="first-ul">
+                                    <li>
+                                        <a class="active" href="@Url.Action("Index","Home", new { area=""})">Trang Chủ</a>
+                                    </li>
+                                    <li><a href="@Url.Action("Menu","Home", new { area=""})">Sản Phẩm</a></li>
+                                    <li><a href="@Url.Action("HistoryOrder","OrderProgress", new { area=""})">Lịch sử</a></li>
+                                    <li><a href="@Url.Action("Index","Cart", new { area=""})">Giỏ Hàng @ViewData["countCartProducts"]</a></li>
+                                    @*@if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li><a href="@Url.Action("ChatRoom","Home", new { area=""})">Chat Room</a></li>
+                                    }*@
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <li><a href="@Url.Action("Index","AdminHome", new { area="Admin"})">Admin Page</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="search_icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="modal" data-target="#search_bar"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header bottom end -->
+    </header>
+    <!-- end header -->
+    @RenderBody()
+    <!-- Modal -->
+    <div class="modal fade" id="search_bar" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8 offset-lg-2 offset-md-2 offset-sm-2 col-xs-10 col-xs-offset-1">
+                            <div class="navbar-search">
+                                <form action="@Url.Action("Search","Home")" method="get" id="search-global-form" class="search-global">
+                                    <input type="text" placeholder="Type to search" autocomplete="off" name="search" id="search" value="" class="search-global__input">
+                                    <button type="submit" class="search-global__btn"><i class="fa fa-search"></i></button>
+                                    <div class="search-global__note">Begin typing your search above and press return to search.</div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Model search bar -->
+    <!-- footer -->
+    <div class="row">
+        <footer class="footer-distributed">
+            <div class="footer-left">
+                <img src="~/Images/Avatar/logo.png" width="50%" />
+                <h4 style="margin-top:10px;">CONTACT:</h4>
+                <p class="footer-links">CRUSHWATCH.VN Trang Thông Tin Chính Thức.</p>
+                <p class="footer-links">
+                    <span>Số ĐKKD: 41N8041309 cấp ngày 17/8/2018.</span>
+                    Nơi cấp Ủy Ban Nhân Dân Quận 01. Hộ Kinh Doanh: CRUSHWATCH. Hotline: 19005869
+                </p>
+                <p class="footer-links"> Email : CRUSHWATCH@gmail.com</p>
+                <p class="footer-links"> Hotline: 19005869</p>
+                <p class="footer-company-name">webcrush &copy; 2019</p>
+            </div>
+
+            <div class="footer-center">
+
+                <div>
+                    <i class="fa fa-map-marker"></i>
+                    <p><span>828 Sư Vạn Hạnh</span> Phường 13, Quận 10, Tp.HCM</p>
+                </div>
+
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <p>19005869</p>
+                </div>
+
+                <div>
+                    <i class="fa fa-envelope"></i>
+                    <p>CRUSHWATCH@gmail.com</p>
+                </div>
+
+            </div>
+
+            <div class="footer-right">
+
+                <p class="footer-company-about">
+                    <span>About the company</span>
+                    Nỗi sợ vì mua phải đồng hồ kém chất lượng, từ nay không còn lo lắng nữa vì đã có
+                    #CRUSHWATCH.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên tem.
+                </p>
+                <div class="footer-icons">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-github"></i></a>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+    <!-- end footer -->
+    <!-- js section -->
+    <script src="~/Templates/IT-Next/js/jquery.min.js"></script>
+    <script src="~/Templates/IT-Next/js/bootstrap.min.js"></script>
+    <!-- menu js -->
+    <script src="~/Templates/IT-Next/js/menumaker.js"></script>
+    <!-- wow animation -->
+    <script src="~/Templates/IT-Next/js/wow.js"></script>
+    <!-- custom js -->
+    <script src="~/Templates/IT-Next/js/custom.js"></script>
+    <!-- revolution js files -->
+    <script src="~/Templates/IT-Next/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="~/Templates/IT-Next/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    }
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="text" name="user" value="@ViewBag.userCount" />
+<input type="text" name="company" value="@ViewBag.companyCount" />
+<p id="test"></p>
+<h1>My Web Page</h1>
+
+<div id="piechart"></div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    var dem = 0;
+    var user = document.getElementsByName("user").values();
+    var company = document.getElementsByName("company").values();
+    for (var i = 0; i < user; i++) {
+        dem += 1;
+    }
+    document.getElementById("test").innerHTML = dem;
+    // Draw the chart and set the chart values
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['User', user],
+            ['Eat', company]
+        ]);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = { 'title': 'My Average Day', 'width': 550, 'height': 400 };
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+</script>
